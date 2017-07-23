@@ -93,8 +93,8 @@ control 'nginx-04' do
   impact 1.0
   title 'Check for multiple instances'
   desc 'Different instances of the nginx webserver should run in separate environments'
-  describe command('ps aux | egrep "nginx: master" | egrep -v "grep" | wc -l') do
-    its(:stdout) { should match(/^1$/) }
+  describe processes(Regexp.new("nginx: master")) do
+    its('list.length') { should eq 1 }
   end
 end
 
